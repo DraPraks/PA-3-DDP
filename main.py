@@ -1,45 +1,88 @@
-def partition(A, p, r):
- .
- .
- .
- return …
-def quicksort(A, p = …, r = …):
- .
- .
- .
-
 import time
+
+
+def partition(A, p, r):
+    """
+ Partition an array A[p..r] into two parts by selecting A[r] as the pivot.
+
+ :param A: List of integers
+ :param p: Starting index
+ :param r: Ending index
+ :return: The index position of the pivot after partitioning
+ """
+    pivot = A[r]  # Set pivot point
+    i = p - 1
+    for j in range(p, r):
+        if A[j] <= pivot:
+            i += 1
+            A[i], A[j] = A[j], A[i]  # Swap elements
+    A[i + 1], A[r] = A[r], A[i + 1]  # Place pivot in correct position
+    return i + 1
+
+
+def quicksort(A, p, r):
+    """
+ Recursively sorts the subarray A[p..r] using the QuickSort algorithm.
+
+ :param A: List of integers
+ :param p: Starting index
+ :param r: Ending index
+ """
+    if p < r:
+        q = partition(A, p, r)  # Partition the array and get pivot index
+        quicksort(A, p, q - 1)  # Recursively sort the left subarray
+        quicksort(A, q + 1, r)  # Recursively sort the right subarray
+
+
 def main():
- #asking and validating input from user
- .
- .
- .
- try:
- .
- .
- .
- except .......:
- .
- .
- .
- #constructing the list of numbers, using list comprehension
- numbers = ........
- t1 = time.time()
- t = time.process_time()
+    input_filename = input("Enter the name of the input text file: ")
+    try:
+        ifile = open(input_filename, 'r')
+    except:
+        print("Error: Unable to open the input file.")
+        return
 
- print("Sorting in progress ...")
- quicksort(numbers)
+    output_filename = input("Enter the name of the output text file: ")
+    try:
+        ofile = open(output_filename, 'w')
+    except:
+        print("Error: Unable to open/create the output file.")
+        ifile.close()  # Close the input file before exiting
+        return
 
- cpu_time = .................
- duration = .................
+    # Constructing the list of numbers using list comprehension
+    try:
+        numbers = [int(line.strip()) for line in ifile if line.strip()]
+    except:
+        print("Error: Input file contains non-integer values.")
+        ifile.close()
+        ofile.close()
+        return
+
+    # Close the input file as it's no longer needed
+    ifile.close()
+
+    # Measuring CPU and clock time
+    t1 = time.time()  # Start clock time
+    t = time.process_time()  # Start CPU time
+
+    print("Sorting in progress ...")
+    quicksort(numbers, 0, len(numbers) - 1)  # Initial call to quicksort as per pseudocode
+
+    cpu_time = time.process_time() - t  # Calculate CPU time taken
+    duration = time.time() - t1  # Calculate clock time taken
+
+    # Writing the sorted numbers to the output file
+    for number in numbers:
+        ofile.write(str(number) + '\n')  # Write each number on a new line
+
+    # Close the output file
+    ofile.close()
+
+    # Displaying the timing results
+    print("CPU time of the quicksort: ", cpu_time, "seconds")
+    print("Clock time of the quicksort: ", duration, "seconds")
 
 
- #writing the sorted numbers to the output file
- .............
-
- ifile.close()
- ofile.close()
- print("CPU time of the quicksort: ", cpu_time)
- print("Clock time of the quicksort: ", duration)
 if __name__ == '__main__':
- main()
+    main()
