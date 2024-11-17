@@ -22,7 +22,7 @@ def partition(A, p, r):
 
 def quicksort(A, p, r):
     """
- Recursively sorts the subarray A[p..r] using the QuickSort algorithm.
+ Recursively sorts the subarray IN PLACE A[p..r] using the QuickSort algorithm.
 
  :param A: List of integers
  :param p: Starting index
