@@ -35,14 +35,14 @@ def quicksort(A, p, r):
 
 
 def main():
-    input_filename = input("Enter the name of the input text file: ")
+    input_filename = input("Enter the name of the input text file: ") # Assign the file path str to input_filename
     try:
-        ifile = open(input_filename, 'r')
+        ifile = open(input_filename, 'r') # If all is good we should open the file and assign it to ifile
     except:
-        print("Error: Unable to open the input file.")
+        print("Error: Unable to open the input file.") # If not, print an error message and return None
         return
 
-    output_filename = input("Enter the name of the output text file: ")
+    output_filename = input("Enter the name of the output text file: ") # Assign the file path str to output_filename
     try:
         ofile = open(output_filename, 'w')
     except:
@@ -50,7 +50,7 @@ def main():
         ifile.close()  # Close the input file before exiting
         return
 
-    # Constructing the list of numbers using list comprehension
+    # Constructing the list of numbers using list comprehension by iterating through each line in the input file
     try:
         numbers = [int(line.strip()) for line in ifile if line.strip()]
     except:
@@ -58,9 +58,6 @@ def main():
         ifile.close()
         ofile.close()
         return
-
-    # Close the input file as it's no longer needed
-    ifile.close()
 
     # Measuring CPU and clock time
     t1 = time.time()  # Start clock time
@@ -76,10 +73,8 @@ def main():
     for number in numbers:
         ofile.write(str(number) + '\n')  # Write each number on a new line
 
-    # Close the output file
     ofile.close()
-
-    # Displaying the timing results
+    ifile.close()
     print("CPU time of the quicksort: ", cpu_time, "seconds")
     print("Clock time of the quicksort: ", duration, "seconds")
 
